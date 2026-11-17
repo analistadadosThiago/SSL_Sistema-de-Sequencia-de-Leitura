@@ -1,0 +1,8 @@
+{
+  "name": "SSL_Sistema de Sequencia de Leitura",
+  "description": "Sistema web para tratamento automatizado de planilhas Matriz (layout Seqüência de Leitura Executada CEMIG) e geração do relatório Matriz_ControleDeSequenciaLeitura.xlsx.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
