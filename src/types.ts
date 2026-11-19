@@ -13,6 +13,10 @@ export interface ProcessingStats {
   finalRows: number;
   finalCols: number;
   uniqueUnitsCount: number;
+  uniqueInstalacoesCount: number;
+  ruralCount: number;
+  povoadoCount: number;
+  urbanoCount: number;
   planilha3Provided: boolean;
   planilha3Rows: number;
   leituristaBreakdown: Record<string, number>;
@@ -26,13 +30,24 @@ export interface PreviewData {
   totalDataRows: number;
 }
 
+export interface ControleHorarioRow {
+  matricula: string;
+  data: string;
+  horaInicial: string;
+  horaFinal: string;
+  tempoServico: string;
+}
+
 export interface ProcessApiResponse {
   fileName: string;
   fileBase64: string;
+  relatorioGeralFileName: string | null;
+  relatorioGeralBase64: string | null;
   stats: ProcessingStats;
   logs: StageStepLog[];
   warnings: string[];
   preview: PreviewData;
+  controleHorario: ControleHorarioRow[];
   stage2Sample: Array<{ unidade: string; matricula: string }>;
   sourceName?: string;
 }

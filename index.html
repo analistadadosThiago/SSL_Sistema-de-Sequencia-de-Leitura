@@ -15,6 +15,51 @@
     />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function () {
+        function isHmrWsError(event) {
+          var msg = String(
+            (event && event.reason && event.reason.message) ||
+              (event && event.reason) ||
+              (event && event.error && event.error.message) ||
+              (event && event.message) ||
+              ''
+          );
+          return (
+            msg.indexOf('WebSocket') !== -1 ||
+            msg.indexOf('vite') !== -1 ||
+            msg.indexOf('HMR') !== -1
+          );
+        }
+        var origAddEventListener = window.addEventListener;
+        origAddEventListener.call(window, 'unhandledrejection', function (event) {
+          if (isHmrWsError(event)) {
+            if (event && event.preventDefault) event.preventDefault();
+            if (event && event.stopImmediatePropagation) event.stopImmediatePropagation();
+          }
+        }, true);
+        origAddEventListener.call(window, 'error', function (event) {
+          if (isHmrWsError(event)) {
+            if (event && event.preventDefault) event.preventDefault();
+            if (event && event.stopImmediatePropagation) event.stopImmediatePropagation();
+          }
+        }, true);
+        window.addEventListener = function (type, listener, options) {
+          if ((type === 'unhandledrejection' || type === 'error') && typeof listener === 'function') {
+            var wrapped = function (event) {
+              if (isHmrWsError(event)) {
+                if (event && event.preventDefault) event.preventDefault();
+                if (event && event.stopPropagation) event.stopPropagation();
+                return;
+              }
+              return listener.call(this, event);
+            };
+            return origAddEventListener.call(this, type, wrapped, options);
+          }
+          return origAddEventListener.call(this, type, listener, options);
+        };
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
